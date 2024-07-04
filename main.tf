@@ -70,19 +70,21 @@ resource "azurerm_linux_virtual_machine" "vm" {
     sku       = "22_04-lts"
     version   = "latest"
   }
-connection {
+
+  provisioner "remote-exec" {
+    connection {
       type        = "ssh"
       user        = "adminuser"
       password    = "jaggy@123456"
       host        = azurerm_public_ip.pip.ip_address
-      timeout     = "10m"
+      timeout     = "5m"
     }
 
-  provisioner "remote-exec" {
     inline = [
       "sleep 60",
       "sudo apt-get update",
       "sudo apt-get install -y npm",
+      "sudo apt-get update",
       "sudo apt-get install -y nginx",
       "sudo apt-get install -y nodejs",
       
