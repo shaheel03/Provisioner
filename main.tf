@@ -70,6 +70,13 @@ resource "azurerm_linux_virtual_machine" "vm" {
     sku       = "22_04-lts"
     version   = "latest"
   }
+connection {
+      type        = "ssh"
+      user        = "adminuser"
+      password    = "jaggy@123456"
+      host        = azurerm_public_ip.pip.ip_address
+      timeout     = "10m"
+    }
 
   provisioner "remote-exec" {
     inline = [
@@ -81,13 +88,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
       
     ]
   }
-    connection {
-      type        = "ssh"
-      user        = "adminuser"
-      password    = "jaggy@123456"
-      host        = azurerm_public_ip.pip.ip_address
-      timeout     = "10m"
-    }
+    
   }
 
 
